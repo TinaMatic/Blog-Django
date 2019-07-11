@@ -1,0 +1,28 @@
+{%  extends "blog/base.html" %}
+{% block content %}
+
+<div class="container">
+  <div class="jumbotron">
+      <h1 class="display-2"><i class="fas fa-heart"></i>Blog</h1>
+  </div>
+
+  <div class="row">
+    {% for blog in blog_draft %}
+      <div class="card xl-12 d-flex">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <img src="{{ blog.image.url }}" class="card-img" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title blog-title"><a href="{% url 'blog_details' pk=blog.pk %}">{{ blog.title }}</a></h5>
+              <p class="card-text">{{blog.body}}</p>
+              <p class="card-text"><small class="text-muted">Last updated 5 mins ago</small></p>
+              <a href="{% url 'blog_details' pk=blog.pk %}" class="btn btn-publish">Publish</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

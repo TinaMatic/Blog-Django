@@ -1,0 +1,51 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+  <div id="show-card" class="card mb-3">
+  <img src="{{ blog_details.image.url }}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{ blog_details.title }}</h5>
+    <p class="card-text">{{ blog_details.body|safe|linebreaksbr }}</p>
+    {% if  blog_details.published_date %}
+      <small class="text-muted">
+        Published on: {{ blog_details.published_date }}
+      </small>
+    {% else %}
+      <a class="btn btn-publish" href="{% url 'blog_publish' pk=blog_details.pk%}">Finish Publishing</a>
+    {% endif %}
+
+    {% if user.is_authenticated and user == blog_details.author %}
+      <a href="{% url 'blog_edit' pk=blog_details.pk %}" class="btn btn-edit">Edit</a>
+      <a href="{% url 'blog_delete' pk=blog_details.pk %}"class="btn btn-delete">Delete</a>
+    {% endif %}
+  </div>
+  <div class="card-footer">
+    <small class="text-muted">
+      Created by: {{ blog_details.author }} <br>
+      Created {{ blog_details.created_date }}
+    </small>
+  </div>
+  </div>
+
+
+  <div id="show-comment" class="card bg-light mb-3">
+  <div class="card-header text-right">
+    <a class="btn btn-primary" href="#">Add New Comment</a>
+  </div>
+  <!-- <% blog.comments.forEach(function(comment){ %>
+    <div class="card-body">
+      <h5 class="card-title"><%= comment.author.username %></h5>
+      <p class="card-text"><%= comment.text %></p>
+
+      <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
+        <a class="btn btn-sm btn-edit" href="/blogs/<%= blog._id %>/comments/<%= comment._id %>/edit">Edit</a>
+        <form class="delete-form" action="/blogs/<%= blog._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+          <button class="btn btn-sm btn-delete">Delete</button>
+        </form>
+      <% } %>
+    </div>
+  <% }); %> -->
+  </div>
+
+
+{% endblock %}
